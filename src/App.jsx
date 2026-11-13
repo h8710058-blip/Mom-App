@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { lessons } from './lessons/index.js';
 import { load, save } from './storage.js';
+import FreePlay from './screens/FreePlay.jsx';
 import Home from './screens/Home.jsx';
 import LessonPlayer from './screens/LessonPlayer.jsx';
 import Walkthrough from './screens/Walkthrough.jsx';
@@ -41,11 +42,13 @@ export default function App() {
             lessons={lessons}
             progress={data}
             settings={data.settings}
+            onFreePlay={() => setScreen({ name: 'freeplay' })}
             onOpen={(id) => setScreen({ name: 'lesson', id })}
             onToggleRead={() => setData((d) => ({ ...d, settings: { ...d.settings, autoRead: !d.settings.autoRead } }))}
             onReplayWalkthrough={() => setScreen({ name: 'walkthrough' })}
           />
         )}
+        {screen.name === 'freeplay' && <FreePlay onExit={() => setScreen({ name: 'home' })} />}
         {lesson && (
           <LessonPlayer
             key={lesson.id}

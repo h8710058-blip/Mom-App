@@ -37,18 +37,32 @@ const Desktop = forwardRef(function Desktop({ setup, version = '11', onAction, g
   blockedRef.current = onBlocked;
   const [now, setNow] = useState(() => new Date());
 
+  const stateRef = useRef(s);
+  stateRef.current = s;
   const act = useCallback((action, target, payload = {}) => {
+    const state = stateRef.current;
+    if (state.dialog) {
+      const prefix = state.dialog.type === 'saveas' ? 'saveas-' : 'savechanges-';
+      if (!target.startsWith(prefix) && !(state.dialog.type === 'saveas' && target === 'filename-input')) return;
+    }
+    if (guardRef.current && !guardRef.current(target, action)) {
+      blockedRef.current?.(target);
+      return;
+    }
     dispatch({ action, target, payload });
     onActionRef.current?.({ action, target, payload });
   }, []);
   const focus = useCallback((app) => dispatch({ action: 'focus', target: app }), []);
 
-  useImperativeHandle(ref, () => ({ perform: (action, target, payload) => act(action, target, payload) }), [act]);
+  useImperativeHandle(ref, () => ({ perform: (action, target, payload) => act(action, target, payload), getState: () => structuredClone(stateRef.current) }), [act]);
 
   // Global keyboard shortcuts (Ctrl+A/C/V/Z/S, Alt+Tab). Real Alt+Tab is usually
   // grabbed by the operating system, so the lesson also offers a "press it for me" button.
   useEffect(() => {
     const onKey = (e) => {
+      if (e.repeat) return;
+      const root = areaRef.current?.parentElement;
+      if (e.target?.nodeType && e.target !== document.body && !root?.contains(e.target)) return;
       const k = e.key.toLowerCase();
       if ((e.ctrlKey || e.metaKey) && ['a', 'c', 'v', 'z', 's'].includes(k)) {
         if (e.target?.tagName === 'INPUT') {
@@ -56,6 +70,12 @@ const Desktop = forwardRef(function Desktop({ setup, version = '11', onAction, g
           return;
         }
         e.preventDefault();
+        if (guardRef.current && !guardRef.current('ctrl+' + k, 'key')) {
+          blockedRef.current?.('ctrl+' + k);
+          return;
+        }
+        const app = e.target?.getAttribute?.('data-target')?.split('-')[0];
+        if (app && ['notepad', 'word'].includes(app)) focus(app);
         act('key', 'ctrl+' + k);
       } else if (e.altKey && k === 'tab') {
         e.preventDefault();
@@ -64,7 +84,7 @@ const Desktop = forwardRef(function Desktop({ setup, version = '11', onAction, g
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [act]);
+  }, [act, focus]);
 
   useEffect(() => {
     const t = setInterval(() => setNow(new Date()), 30000);

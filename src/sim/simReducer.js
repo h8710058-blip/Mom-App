@@ -83,7 +83,7 @@ function doSave(s, app, rawName, folder) {
   const d = s.docs[app];
   const list = s.files[folder];
   const file = { name: base, kind: ext, content: d.text };
-  const i = list.findIndex((f) => f.name === base);
+  const i = list.findIndex((f) => f.name.toLowerCase() === base.toLowerCase());
   if (i >= 0) list[i] = file;
   else list.push(file);
   d.file = { name: base, folder };
@@ -218,7 +218,10 @@ function handleClick(s, target) {
       s.dialog.error = 'Type a file name first.';
       return;
     }
-    doSave(s, app, name, folder);
+    if (!doSave(s, app, name, folder)) {
+      s.dialog.error = 'Please use letters or numbers in the file name.';
+      return;
+    }
     s.dialog = null;
     if (closeAfter) closeApp(s, app);
     return;
@@ -288,6 +291,10 @@ function handleDouble(s, target) {
 export function reduce(prev, ev) {
   const s = structuredClone(prev);
   const { action, target = '', payload = {} } = ev;
+  if (s.dialog && !['clearToast', 'dismiss'].includes(action)) {
+    const prefix = s.dialog.type === 'saveas' ? 'saveas-' : 'savechanges-';
+    if (!target.startsWith(prefix) && !(s.dialog.type === 'saveas' && target === 'filename-input')) return prev;
+  }
   switch (action) {
     case 'dismiss':
       s.startOpen = false;
@@ -309,6 +316,8 @@ export function reduce(prev, ev) {
     case 'type':
       if (target === 'notepad-text' || target === 'word-text') {
         const d = s.docs[target.split('-')[0]];
+        if (d.text === (payload.value ?? '')) return prev;
+        d.history.push(d.text);
         d.text = payload.value ?? '';
         d.dirty = true;
         d.sel = null;

@@ -1,0 +1,61 @@
+{
+  "id": "desktop-note",
+  "title": "Keep a note on the Desktop",
+  "summary": "Save a note where you can easily find it.",
+  "learn": [
+    "Choose the Desktop",
+    "Save a named note",
+    "Open it from the Desktop"
+  ],
+  "setup": {
+    "open": [
+      "notepad"
+    ],
+    "notepadText": "Water the plants."
+  },
+  "steps": [
+    {
+      "action": "key",
+      "say": "Hold Ctrl and tap S.",
+      "detail": "This opens the Save window.",
+      "combo": "ctrl+s",
+      "id": "step-1"
+    },
+    {
+      "action": "click",
+      "say": "Click Desktop on the left.",
+      "detail": "Your note will appear on the blue background.",
+      "target": "saveas-nav-desktop",
+      "id": "step-2"
+    },
+    {
+      "action": "type",
+      "say": "Type the name: plants",
+      "detail": "A short name helps you find it.",
+      "target": "filename-input",
+      "text": "plants",
+      "id": "step-3"
+    },
+    {
+      "action": "click",
+      "say": "Click Save.",
+      "detail": "Your note is now kept on the Desktop.",
+      "target": "saveas-save-btn",
+      "id": "step-4"
+    },
+    {
+      "action": "click",
+      "say": "Close Notepad.",
+      "detail": "The saved file stays on the Desktop.",
+      "target": "notepad-close",
+      "id": "step-5"
+    },
+    {
+      "action": "dblclick",
+      "say": "Double-click plants.txt.",
+      "detail": "Your saved words open again.",
+      "target": "deskfile-plants.txt",
+      "id": "step-6"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "save-on-close",
+  "title": "Save when you close",
+  "summary": "Keep your words when Windows asks about saving.",
+  "learn": [
+    "Close an unsaved note",
+    "Choose Save",
+    "Name and keep the note"
+  ],
+  "setup": {
+    "open": [
+      "notepad"
+    ],
+    "notepadText": "Lunch on Sunday."
+  },
+  "steps": [
+    {
+      "action": "click",
+      "say": "Click the X to close Notepad.",
+      "detail": "Windows checks before losing your words.",
+      "target": "notepad-close",
+      "id": "step-1"
+    },
+    {
+      "action": "click",
+      "say": "Click Save.",
+      "detail": "This tells Windows to keep your note.",
+      "target": "savechanges-save",
+      "id": "step-2"
+    },
+    {
+      "action": "type",
+      "say": "Type the name: Sunday lunch",
+      "detail": "A name helps you find the note later.",
+      "target": "filename-input",
+      "text": "Sunday lunch",
+      "id": "step-3"
+    },
+    {
+      "action": "click",
+      "say": "Click Save.",
+      "detail": "Your note is saved and Notepad closes.",
+      "target": "saveas-save-btn",
+      "id": "step-4"
+    }
+  ]
+}

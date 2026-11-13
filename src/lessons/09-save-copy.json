@@ -1,0 +1,69 @@
+{
+  "id": "save-copy",
+  "title": "Save a copy",
+  "summary": "Keep your first note and make another copy.",
+  "learn": [
+    "Open a saved note",
+    "Choose Save As",
+    "Give the copy a new name"
+  ],
+  "setup": {
+    "open": [
+      "explorer"
+    ],
+    "files": {
+      "documents": [
+        {
+          "name": "note.txt",
+          "kind": "txt",
+          "content": "Call Mary."
+        }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "action": "dblclick",
+      "say": "Double-click note.txt.",
+      "detail": "This opens the note you saved before.",
+      "target": "file-note.txt",
+      "id": "step-1"
+    },
+    {
+      "action": "click",
+      "say": "Click File.",
+      "detail": "This menu has the saving choices.",
+      "target": "notepad-menu-file",
+      "id": "step-2"
+    },
+    {
+      "action": "click",
+      "say": "Click Save as.",
+      "detail": "A new name keeps your first file safe.",
+      "target": "menu-saveas",
+      "id": "step-3"
+    },
+    {
+      "action": "type",
+      "say": "Replace the name with: note copy",
+      "detail": "Select the old name first, then type the new one.",
+      "target": "filename-input",
+      "text": "note copy",
+      "id": "step-4"
+    },
+    {
+      "action": "click",
+      "say": "Click Save.",
+      "detail": "You now have two separate files.",
+      "target": "saveas-save-btn",
+      "id": "step-5"
+    },
+    {
+      "action": "click",
+      "say": "Close Notepad.",
+      "detail": "Both copies are waiting in Documents.",
+      "target": "notepad-close",
+      "id": "step-6"
+    }
+  ]
+}

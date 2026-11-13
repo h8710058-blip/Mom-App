@@ -2,7 +2,7 @@ import { canSpeak } from '../speech.js';
 
 const MODE_KEYS = ['watch', 'guided', 'try'];
 
-export default function Home({ lessons, progress, settings, onOpen, onToggleRead, onReplayWalkthrough }) {
+export default function Home({ lessons, progress, settings, onOpen, onToggleRead, onReplayWalkthrough, onFreePlay }) {
   const stars = (id) => MODE_KEYS.filter((m) => progress.lessons[id]?.[m]).length;
   const total = lessons.reduce((n, l) => n + stars(l.id), 0);
   const firstOpen = lessons.find((l) => stars(l.id) < 3) || lessons[0];
@@ -21,6 +21,7 @@ export default function Home({ lessons, progress, settings, onOpen, onToggleRead
         </div>
       </div>
 
+      <button className="btn" onClick={onFreePlay}>Free Play</button>
       <h2 className="section-title">All lessons</h2>
       <ol className="lesson-list">
         {lessons.map((l, i) => {

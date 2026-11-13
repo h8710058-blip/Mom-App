@@ -1,0 +1,41 @@
+{
+  "id": "recycle-bin",
+  "title": "Right-click and the Recycle Bin",
+  "summary": "Explore two safe places on the Desktop.",
+  "learn": [
+    "Open the right-click menu",
+    "Close the menu safely",
+    "Read the Recycle Bin message"
+  ],
+  "setup": {},
+  "steps": [
+    {
+      "action": "rightclick",
+      "say": "Right-click the blue background.",
+      "detail": "The right mouse button shows extra choices.",
+      "target": "desktop-area",
+      "id": "step-1"
+    },
+    {
+      "action": "click",
+      "say": "Click Refresh.",
+      "detail": "This safe choice closes the menu.",
+      "target": "ctx-refresh",
+      "id": "step-2"
+    },
+    {
+      "action": "click",
+      "say": "Click the Recycle Bin once.",
+      "detail": "One click selects it.",
+      "target": "icon-recycle",
+      "id": "step-3"
+    },
+    {
+      "action": "dblclick",
+      "say": "Double-click the Recycle Bin.",
+      "detail": "Read the message: the Recycle Bin is empty.",
+      "target": "icon-recycle",
+      "id": "step-4"
+    }
+  ]
+}

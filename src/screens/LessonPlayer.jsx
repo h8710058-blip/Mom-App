@@ -18,7 +18,6 @@ const ACTION_WORD = {
   rightclick: 'a right-click (the right-hand button)',
 };
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const norm = (t = '') => t.toLowerCase().replace(/\s+/g, ' ').trim();
 
 export default function LessonPlayer({ lesson, lessons, progress, settings, onExit, onOpenLesson, onComplete }) {
@@ -34,6 +33,16 @@ export default function LessonPlayer({ lesson, lessons, progress, settings, onEx
   const [cursorTarget, setCursorTarget] = useState(null);
   const [scale, setScale] = useState(1);
 
+  const waits = useRef(new Set());
+  const sleep = useCallback((ms) => new Promise((resolve) => {
+    const timer = setTimeout(() => { waits.current.delete(timer); resolve(); }, ms);
+    waits.current.add(timer);
+  }), []);
+  const cancelWaits = () => {
+    waits.current.forEach(clearTimeout);
+    waits.current.clear();
+  };
+  useEffect(() => cancelWaits, []);
   const simRef = useRef(null);
   const wrapRef = useRef(null);
   const idxRef = useRef(0);
@@ -41,6 +50,15 @@ export default function LessonPlayer({ lesson, lessons, progress, settings, onEx
   const performed = useRef(0);
   const advancing = useRef(false);
   const nudgeTimer = useRef(null);
+  const advanceTimer = useRef(null);
+  const clearTimers = () => {
+    clearTimeout(nudgeTimer.current);
+    clearTimeout(advanceTimer.current);
+  };
+  useEffect(() => clearTimers, []);
+  useEffect(() => {
+    if (mode === null) clearTimers();
+  }, [mode]);
   const completedRef = useRef(false);
   idxRef.current = idx;
   modeRef.current = mode;
@@ -60,6 +78,8 @@ export default function LessonPlayer({ lesson, lessons, progress, settings, onEx
   }, [mode, finished]);
 
   const start = useCallback((m) => {
+    clearTimers();
+    stopSpeaking();
     setMode(m);
     setIdx(0);
     setHint(false);
@@ -99,7 +119,7 @@ export default function LessonPlayer({ lesson, lessons, progress, settings, onEx
     advancing.current = true;
     setNudge('');
     setHint(false);
-    setTimeout(() => {
+    advanceTimer.current = setTimeout(() => {
       advancing.current = false;
       setIdx((i) => i + 1);
     }, st.action === 'type' ? 900 : 600);
@@ -114,7 +134,7 @@ export default function LessonPlayer({ lesson, lessons, progress, settings, onEx
       if (!st || advancing.current) return;
       const want = st.action === 'key' ? st.combo : st.target;
       if (ev.action === st.action && ev.target === want) {
-        if (st.action === 'type' && !norm(ev.payload?.value).includes(norm(st.text))) return;
+        if (st.action === 'type' && norm(ev.payload?.value) !== norm(st.text)) return;
         advance(st);
       } else if (
         m === 'guided' &&
@@ -132,12 +152,14 @@ export default function LessonPlayer({ lesson, lessons, progress, settings, onEx
 
   /* Guided mode only lets her touch the highlighted thing */
   const guard = useCallback(
-    (id) => {
+    (id, eventType) => {
       if (modeRef.current !== 'guided') return true;
       const st = steps[idxRef.current];
-      if (!st || advancing.current) return true;
-      if (st.action === 'key') return false;
-      return id === st.target;
+      if (!st || advancing.current) return false;
+      const action = ({ doubleclick: 'dblclick', contextmenu: 'rightclick', change: 'type' })[eventType] || eventType;
+      if (st.action === 'key') return action === 'key' && id === st.combo;
+      if (id !== st.target) return false;
+      return action === st.action || (action === 'click' && ['dblclick', 'type'].includes(st.action));
     },
     [steps]
   );
@@ -149,17 +171,26 @@ export default function LessonPlayer({ lesson, lessons, progress, settings, onEx
   const runStep = useCallback(async (st, typing, isCancelled) => {
     const sim = simRef.current;
     if (!sim) return;
-    if (st.action === 'key') sim.perform('key', st.combo);
+    if (st.action === 'key') {
+      sim.perform('key', st.combo);
+      performed.current = idxRef.current + 1;
+    }
     else if (st.action === 'type') {
       if (typing) {
-        for (let k = 1; k <= st.text.length; k++) {
+        const value = document.querySelector(`[data-target="${st.target}"]`)?.value || '';
+        const offset = st.text.startsWith(value) ? value.length : 0;
+        for (let k = offset + 1; k <= st.text.length; k++) {
           if (isCancelled()) return;
           sim.perform('type', st.target, { value: st.text.slice(0, k) });
           await sleep(85);
         }
       } else sim.perform('type', st.target, { value: st.text });
-    } else sim.perform(st.action, st.target);
-  }, []);
+      if (!isCancelled()) performed.current = idxRef.current + 1;
+    } else {
+      sim.perform(st.action, st.target);
+      performed.current = idxRef.current + 1;
+    }
+  }, [sleep]);
 
   /* Watch mode: the lesson plays itself */
   useEffect(() => {
@@ -198,8 +229,9 @@ export default function LessonPlayer({ lesson, lessons, progress, settings, onEx
     })();
     return () => {
       cancelled = true;
+      cancelWaits();
     };
-  }, [mode, paused, runId, steps, runStep]);
+  }, [mode, paused, runId, steps, runStep, sleep]);
 
   const doItForMe = () => step && runStep(step, false, () => false);
 

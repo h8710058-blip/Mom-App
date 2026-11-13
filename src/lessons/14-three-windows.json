@@ -1,0 +1,75 @@
+{
+  "id": "three-windows",
+  "title": "Switch between three windows",
+  "summary": "Move between your open programs.",
+  "learn": [
+    "Find open programs on the taskbar",
+    "Switch with Alt and Tab",
+    "Close programs when finished"
+  ],
+  "setup": {
+    "open": [
+      "explorer",
+      "notepad",
+      "word"
+    ]
+  },
+  "steps": [
+    {
+      "action": "click",
+      "say": "Click File Explorer on the bottom bar.",
+      "detail": "The taskbar brings that window to the front.",
+      "target": "taskbar-explorer",
+      "id": "step-1"
+    },
+    {
+      "action": "click",
+      "say": "Click Notepad on the bottom bar.",
+      "detail": "Your other programs stay open.",
+      "target": "taskbar-notepad",
+      "id": "step-2"
+    },
+    {
+      "action": "key",
+      "say": "Hold Alt and tap Tab.",
+      "detail": "This returns to the previous window.",
+      "combo": "alt+tab",
+      "id": "step-3"
+    },
+    {
+      "action": "click",
+      "say": "Click Word on the bottom bar.",
+      "detail": "You have now visited all three programs.",
+      "target": "taskbar-word",
+      "id": "step-4"
+    },
+    {
+      "action": "key",
+      "say": "Hold Alt and tap Tab again.",
+      "detail": "This brings back File Explorer.",
+      "combo": "alt+tab",
+      "id": "step-5"
+    },
+    {
+      "action": "click",
+      "say": "Close File Explorer.",
+      "detail": "The other two programs stay open.",
+      "target": "explorer-close",
+      "id": "step-6"
+    },
+    {
+      "action": "click",
+      "say": "Close Word.",
+      "detail": "One program remains.",
+      "target": "word-close",
+      "id": "step-7"
+    },
+    {
+      "action": "click",
+      "say": "Close Notepad.",
+      "detail": "Your Desktop is clear again.",
+      "target": "notepad-close",
+      "id": "step-8"
+    }
+  ]
+}

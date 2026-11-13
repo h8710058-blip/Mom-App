@@ -1,0 +1,62 @@
+{
+  "id": "edit-saved-note",
+  "title": "Add to a saved note",
+  "summary": "Open your note and keep some more words.",
+  "learn": [
+    "Find a saved note",
+    "Add another line",
+    "Save with Ctrl and S"
+  ],
+  "setup": {
+    "open": [
+      "explorer"
+    ],
+    "files": {
+      "documents": [
+        {
+          "name": "note.txt",
+          "kind": "txt",
+          "content": "Call Mary."
+        }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "action": "click",
+      "say": "Click Documents.",
+      "detail": "This is where your note lives.",
+      "target": "explorer-nav-documents",
+      "id": "step-1"
+    },
+    {
+      "action": "dblclick",
+      "say": "Double-click note.txt.",
+      "detail": "Your earlier words are still here.",
+      "target": "file-note.txt",
+      "id": "step-2"
+    },
+    {
+      "action": "type",
+      "say": "Add a new line: Buy milk.",
+      "detail": "Keep Call Mary. on the first line.",
+      "target": "notepad-text",
+      "text": "Call Mary.\nBuy milk.",
+      "id": "step-3"
+    },
+    {
+      "action": "key",
+      "say": "Hold Ctrl and tap S.",
+      "detail": "This updates the same file with your extra words.",
+      "combo": "ctrl+s",
+      "id": "step-4"
+    },
+    {
+      "action": "click",
+      "say": "Close Notepad.",
+      "detail": "Your changes are safely saved.",
+      "target": "notepad-close",
+      "id": "step-5"
+    }
+  ]
+}
