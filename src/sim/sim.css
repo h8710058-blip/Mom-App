@@ -1,0 +1,727 @@
+/* Simulated Windows. Logical size 1100x620; the player scales it to fit.
+   Windows 11 is the default look. [data-win="10"] overrides a few things (basic variant). */
+.sim {
+  --accent: #0067c0;
+  --win-radius: 8px;
+  --tb-bg: rgba(243, 243, 243, 0.9);
+  --tb-fg: #1b1b1b;
+  --tb-justify: center;
+  --title-bg: #f3f3f3;
+  --title-bg-inactive: #fafafa;
+  --win-border: rgba(0, 0, 0, 0.18);
+  position: relative;
+  width: 1100px;
+  height: 620px;
+  overflow: hidden;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
+  color: #1b1b1b;
+  user-select: none;
+  background: #1a6fe0;
+}
+.sim[data-win='10'] {
+  --accent: #0078d7;
+  --win-radius: 0;
+  --tb-bg: rgba(20, 24, 33, 0.95);
+  --tb-fg: #fff;
+  --tb-justify: flex-start;
+  --title-bg: #ffffff;
+  --title-bg-inactive: #ffffff;
+}
+
+.sim-wallpaper {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 80% at 28% 72%, #6db3ff 0%, transparent 62%),
+    radial-gradient(50% 70% at 78% 28%, #b58cff 0%, transparent 62%),
+    linear-gradient(135deg, #0b3d91, #1a6fe0 50%, #7a4fd6);
+}
+.sim[data-win='10'] .sim-wallpaper {
+  background: radial-gradient(70% 90% at 70% 40%, #2b8be0 0%, transparent 70%), linear-gradient(120deg, #052a63, #0a5bb8);
+}
+.sim-spot {
+  position: absolute;
+  left: 600px;
+  top: 300px;
+  width: 240px;
+  height: 120px;
+  pointer-events: none;
+}
+
+/* Desktop icons */
+.sim-icon {
+  position: absolute;
+  width: 84px;
+  padding: 6px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: default;
+  word-break: break-word;
+  z-index: 2;
+}
+.sim-icon.selected {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Windows */
+.sim-win {
+  position: absolute;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--win-border);
+  border-radius: var(--win-radius);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+.sim-win.active {
+  box-shadow: 0 10px 38px rgba(0, 0, 0, 0.5);
+}
+.sim-win.max {
+  border-radius: 0;
+}
+.sim-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding-left: 10px;
+  background: var(--title-bg-inactive);
+  flex: none;
+}
+.sim-win.active .sim-titlebar {
+  background: var(--title-bg);
+}
+.sim-title {
+  flex: 1;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sim-ctls {
+  display: flex;
+  height: 100%;
+}
+.sim-ctl {
+  width: 46px;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: #1b1b1b;
+  display: grid;
+  place-items: center;
+  cursor: default;
+  padding: 0;
+}
+.sim-ctl:hover {
+  background: #e5e5e5;
+}
+.sim-ctl.close:hover {
+  background: #c42b1c;
+  color: #fff;
+}
+
+.sim-status {
+  flex: none;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 12px;
+  font-size: 12px;
+  color: #555;
+  background: #f3f3f3;
+  border-top: 1px solid #e3e3e3;
+}
+
+/* Explorer */
+.sim-explorer,
+.sim-notepad,
+.sim-word,
+.sim-browser {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+}
+.sim-exp-bar,
+.sim-br-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: #fbfbfb;
+  border-bottom: 1px solid #e3e3e3;
+}
+.sim-exp-arrows {
+  color: #777;
+  letter-spacing: 4px;
+  font-size: 15px;
+}
+.sim-exp-addr,
+.sim-br-addr {
+  flex: 1;
+  padding: 5px 12px;
+  background: #fff;
+  border: 1px solid #d6d6d6;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.sim-exp-main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+.sim-exp-nav {
+  width: 170px;
+  flex: none;
+  padding: 8px;
+  background: #fafafa;
+  border-right: 1px solid #ececec;
+}
+.sim-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  margin-bottom: 2px;
+  border-radius: 6px;
+  cursor: default;
+}
+.sim-nav-item:hover {
+  background: #eaeaea;
+}
+.sim-nav-item.selected {
+  background: #dbe8f7;
+}
+.sim-exp-files {
+  flex: 1;
+  padding: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 10px;
+  overflow: auto;
+}
+.sim-file {
+  width: 118px;
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  font-size: 13px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  word-break: break-word;
+  cursor: default;
+}
+.sim-file:hover {
+  background: #eef3fa;
+}
+.sim-file.selected {
+  background: #cfe2f7;
+  border-color: #9cc3ec;
+}
+.sim-empty {
+  color: #777;
+  padding: 24px;
+  font-size: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Notepad / Word */
+.sim-menubar,
+.sim-word-tabs {
+  position: relative;
+  flex: none;
+  display: flex;
+  gap: 2px;
+  background: #fff;
+  border-bottom: 1px solid #e3e3e3;
+  padding: 2px 6px;
+}
+.sim-mb-item,
+.sim-wtab {
+  padding: 4px 12px;
+  border-radius: 5px;
+  cursor: default;
+}
+.sim-mb-item:hover,
+.sim-wtab:hover {
+  background: #ececec;
+}
+.sim-mb-item.open,
+.sim-wtab.open {
+  background: #dbe8f7;
+}
+.sim-mb-item.dim,
+.sim-wtab.dim {
+  color: #666;
+}
+.sim-wtab.file {
+  background: #185abd;
+  color: #fff;
+  font-weight: 600;
+}
+.sim-wtab.file.open,
+.sim-wtab.file:hover {
+  background: #123f87;
+}
+.sim-wtab.on {
+  border-bottom: 2px solid #185abd;
+  border-radius: 0;
+}
+.sim-menu {
+  position: absolute;
+  left: 6px;
+  top: 100%;
+  z-index: 30;
+  min-width: 250px;
+  padding: 4px;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.sim-menu-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 7px 12px;
+  border-radius: 5px;
+  cursor: default;
+}
+.sim-menu-item:hover:not(.disabled) {
+  background: #e6effa;
+}
+.sim-menu-item em {
+  font-style: normal;
+  color: #777;
+  font-size: 13px;
+}
+.sim-menu-item.disabled {
+  color: #9a9a9a;
+}
+.sim-textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  outline: 0;
+  resize: none;
+  padding: 10px 12px;
+  font: 17px/1.45 Consolas, 'Courier New', monospace;
+  color: #111;
+  background: #fff;
+  user-select: text;
+}
+.sim-textarea::selection {
+  background: #0067c0;
+  color: #fff;
+}
+.sim-textarea.word {
+  font: 18px/1.5 Calibri, Carlito, 'Segoe UI', sans-serif;
+  height: 100%;
+}
+.sim-ribbon {
+  flex: none;
+  display: flex;
+  gap: 0;
+  height: 70px;
+  background: #f3f3f3;
+  border-bottom: 1px solid #d9d9d9;
+}
+.sim-rb-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  gap: 6px 10px;
+  padding: 6px 16px;
+  border-right: 1px solid #dcdcdc;
+  color: #333;
+  position: relative;
+  min-width: 120px;
+}
+.sim-rb-group small {
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #777;
+  font-size: 11px;
+}
+.sim-rb-font {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 0 8px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+.sim-word-canvas {
+  flex: 1;
+  min-height: 0;
+  background: #e6e6e6;
+  padding: 12px 0 0;
+  display: flex;
+  justify-content: center;
+}
+.sim-page {
+  width: 80%;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+  padding: 22px 28px;
+  display: flex;
+}
+
+/* Browser */
+.sim-br-page {
+  flex: 1;
+  padding: 36px 48px;
+  background: linear-gradient(#fff, #f6f9ff);
+}
+.sim-br-page h2 {
+  margin: 0 0 10px;
+  font-size: 28px;
+}
+.sim-br-page p {
+  font-size: 17px;
+  margin: 0 0 24px;
+  color: #444;
+}
+.sim-dl-btn {
+  font: 600 18px 'Segoe UI', sans-serif;
+  padding: 14px 28px;
+  border: 0;
+  border-radius: 8px;
+  background: #0067c0;
+  color: #fff;
+  cursor: default;
+}
+.sim-dl-btn:hover {
+  background: #005aa8;
+}
+.sim-dlbar {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+.sim-dl-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.sim-dl-info small {
+  color: #2e7d32;
+}
+.sim-dl-link {
+  border: 0;
+  background: transparent;
+  color: #0067c0;
+  font: 600 15px 'Segoe UI', sans-serif;
+  text-decoration: underline;
+  cursor: default;
+  padding: 6px 8px;
+}
+.sim-dl-x {
+  border: 0;
+  background: transparent;
+  font-size: 15px;
+  padding: 6px 8px;
+  cursor: default;
+}
+
+/* Dialogs */
+.sim-modal {
+  position: absolute;
+  inset: 0 0 48px 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.18);
+}
+.sim-dialog {
+  background: #fff;
+  border: 1px solid #c9c9c9;
+  border-radius: var(--win-radius);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+.sim-dialog.saveas {
+  width: 620px;
+}
+.sim-dialog.small {
+  width: 440px;
+}
+.sim-dlg-title {
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #f3f3f3;
+  border-bottom: 1px solid #e3e3e3;
+}
+.sim-dlg-addr {
+  margin: 10px 14px 0;
+  padding: 5px 12px;
+  border: 1px solid #d6d6d6;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.sim-dlg-body {
+  display: flex;
+  height: 170px;
+  margin: 10px 14px;
+  border: 1px solid #e3e3e3;
+}
+.sim-dlg-files {
+  flex: 1;
+  padding: 8px;
+  overflow: auto;
+}
+.sim-dlg-file {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  font-size: 14px;
+}
+.sim-dlg-form {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 8px 10px;
+  align-items: center;
+  margin: 0 14px;
+}
+.sim-dlg-form label {
+  font-size: 14px;
+}
+.sim-dlg-form input {
+  font: 16px 'Segoe UI', sans-serif;
+  padding: 7px 10px;
+  border: 1px solid #8a8a8a;
+  border-radius: 4px;
+  user-select: text;
+}
+.sim-dlg-form input:focus {
+  outline: 2px solid #0067c0;
+  outline-offset: -1px;
+}
+.sim-fake-select {
+  padding: 7px 10px;
+  border: 1px solid #c9c9c9;
+  border-radius: 4px;
+  background: #fafafa;
+  font-size: 14px;
+}
+.sim-dlg-error {
+  margin: 8px 14px 0;
+  color: #b3470f;
+  font-size: 14px;
+}
+.sim-dlg-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px;
+}
+.sim-dlg-msg {
+  margin: 18px 18px 6px;
+  font-size: 17px;
+}
+.sim-btn {
+  min-width: 92px;
+  padding: 8px 18px;
+  font: 15px 'Segoe UI', sans-serif;
+  background: #fdfdfd;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  cursor: default;
+}
+.sim-btn:hover {
+  background: #eef3fa;
+}
+.sim-btn.primary {
+  background: #0067c0;
+  border-color: #0067c0;
+  color: #fff;
+}
+.sim-btn.primary:hover {
+  background: #005aa8;
+}
+
+/* Context menu */
+.sim-ctx {
+  position: absolute;
+  z-index: 180;
+  width: 210px;
+  padding: 4px;
+  background: rgba(252, 252, 252, 0.97);
+  border: 1px solid #cfcfcf;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.sim-ctx-item {
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: default;
+}
+.sim-ctx-item:hover {
+  background: #e3ecf8;
+}
+
+/* Start menu */
+.sim-start {
+  position: absolute;
+  z-index: 190;
+  left: 50%;
+  bottom: 58px;
+  transform: translateX(-50%);
+  width: 520px;
+  padding: 22px 26px;
+  background: rgba(246, 246, 246, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+.sim[data-win='10'] .sim-start {
+  left: 0;
+  transform: none;
+  bottom: 48px;
+  border-radius: 0;
+}
+.sim-start-search {
+  padding: 9px 16px;
+  margin-bottom: 18px;
+  border: 1px solid #d8d8d8;
+  border-radius: 20px;
+  background: #fff;
+  color: #777;
+}
+.sim-start-h {
+  font-weight: 600;
+  margin: 6px 0 10px;
+}
+.sim-start-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.sim-start-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 4px;
+  border-radius: 8px;
+  font-size: 13px;
+  text-align: center;
+  cursor: default;
+}
+.sim-start-app:hover {
+  background: #e3ecf8;
+}
+.sim-start-rec {
+  color: #777;
+  padding: 10px 0 14px;
+  font-size: 14px;
+}
+
+/* Taskbar */
+.sim-taskbar {
+  position: absolute;
+  z-index: 200;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--tb-bg);
+  color: var(--tb-fg);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.sim-tb-center {
+  flex: 1;
+  display: flex;
+  justify-content: var(--tb-justify);
+  gap: 4px;
+  padding-left: 0;
+}
+.sim-tb-btn {
+  position: relative;
+  width: 44px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  cursor: default;
+}
+.sim-tb-btn:hover {
+  background: rgba(127, 127, 127, 0.25);
+}
+.sim-tb-btn.active {
+  background: rgba(127, 127, 127, 0.22);
+}
+.sim-tb-dot {
+  position: absolute;
+  bottom: 2px;
+  width: 6px;
+  height: 3px;
+  border-radius: 2px;
+  background: #8a8a8a;
+}
+.sim-tb-btn.active .sim-tb-dot {
+  width: 16px;
+  background: var(--accent);
+}
+.sim-tb-clock {
+  position: absolute;
+  right: 14px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.sim-toast {
+  position: absolute;
+  z-index: 250;
+  left: 50%;
+  bottom: 62px;
+  transform: translateX(-50%);
+  max-width: 560px;
+  padding: 12px 20px;
+  background: #1f2933;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 15px;
+  text-align: center;
+}

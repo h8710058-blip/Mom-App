@@ -1,0 +1,35 @@
+/* Single source of truth for colour, spacing and type. Edit here only. */
+:root {
+  /* Colour */
+  --bg: #FAF7F2;
+  --surface: #FFFFFF;
+  --text: #1F2933;
+  --muted: #52606D;
+  --border: #D9D3C7;
+  --primary: #1D5FD1;
+  --primary-dark: #174BA8;
+  --primary-soft: #E6EEFB;
+  --highlight: #FFB020; /* spotlight ring: "lesson", never confused with Windows blue */
+  --success: #2E8B57;
+  --success-soft: #E3F4EA;
+  --gentle-error: #D9622B;
+  --gentle-error-soft: #FDEBE3;
+
+  /* Spacing scale: 8 / 16 / 24 / 40 */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+
+  /* Shape and size */
+  --radius: 14px;
+  --radius-lg: 18px;
+  --target: 56px; /* minimum click/tap target */
+
+  /* Type (root font-size is 20px: body 20, instruction 24, heading 32) */
+  --font: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --fs-body: 1rem;
+  --fs-instruction: 1.2rem;
+  --fs-heading: 1.6rem;
+  --fs-hero: 2.1rem;
+}

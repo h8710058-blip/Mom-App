@@ -1,0 +1,15 @@
+{
+  "id": "shortcuts",
+  "title": "Keyboard shortcuts",
+  "summary": "Select, copy, paste, undo and save with Ctrl.",
+  "learn": ["Ctrl+A selects all", "Ctrl+C copies, Ctrl+V pastes", "Ctrl+Z undoes, Ctrl+S saves"],
+  "setup": { "open": ["notepad"], "notepadText": "Remember: call the doctor at 3pm." },
+  "steps": [
+    { "id": "all", "action": "key", "combo": "ctrl+a", "say": "Select everything: hold Ctrl, tap A.", "detail": "A for All. Your words turn blue." },
+    { "id": "copy", "action": "key", "combo": "ctrl+c", "say": "Copy it: hold Ctrl, tap C.", "detail": "C for Copy. Nothing seems to happen, but it is remembered." },
+    { "id": "paste", "action": "key", "combo": "ctrl+v", "say": "Paste it: hold Ctrl, tap V.", "detail": "The copy appears. Now there are two lines." },
+    { "id": "undo", "action": "key", "combo": "ctrl+z", "say": "Undo it: hold Ctrl, tap Z.", "detail": "Z is the undo button. It fixes mistakes." },
+    { "id": "save", "action": "key", "combo": "ctrl+s", "say": "Save it: hold Ctrl, tap S.", "detail": "The Save window opens, just like File, then Save." },
+    { "id": "cancel", "action": "click", "target": "saveas-cancel-btn", "say": "Click Cancel. We don't need to save this one.", "detail": "Cancel closes a window without doing anything." }
+  ]
+}

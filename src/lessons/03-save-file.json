@@ -1,0 +1,15 @@
+{
+  "id": "save-file",
+  "title": "Saving a file",
+  "summary": "Give your work a name and keep it.",
+  "learn": ["Use File, then Save", "Choose where it goes", "Name your file"],
+  "setup": { "open": ["notepad"], "notepadText": "Milk\nBread\nEggs\nBananas" },
+  "steps": [
+    { "id": "file", "action": "click", "target": "notepad-menu-file", "say": "Click File at the top of Notepad.", "hint": "It is the first word, top-left of the Notepad window." },
+    { "id": "save", "action": "click", "target": "menu-save", "say": "Click Save.", "detail": "Notice Ctrl+S on the right. That is a shortcut. You will learn it soon." },
+    { "id": "where", "action": "click", "target": "saveas-nav-documents", "say": "On the left, click Documents.", "detail": "This chooses where your file will live." },
+    { "id": "name", "action": "type", "target": "filename-input", "text": "shopping list", "say": "Click the File name box and type: shopping list", "detail": "Pick a name you will remember." },
+    { "id": "go", "action": "click", "target": "saveas-save-btn", "say": "Click the Save button.", "detail": "Look at the top of Notepad. It now shows your file name." },
+    { "id": "close", "action": "click", "target": "notepad-close", "say": "Click the X to close Notepad.", "detail": "No question this time, because everything is saved." }
+  ]
+}

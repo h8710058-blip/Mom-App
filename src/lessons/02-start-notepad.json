@@ -1,0 +1,14 @@
+{
+  "id": "start-notepad",
+  "title": "Start menu and Notepad",
+  "summary": "Open a program and type a note.",
+  "learn": ["Find the Start button", "Open Notepad", "Type some words"],
+  "setup": {},
+  "steps": [
+    { "id": "start", "action": "click", "target": "start-button", "say": "Click the Start button at the bottom of the screen.", "detail": "It is the blue Windows logo.", "hint": "Look in the middle of the bar along the bottom." },
+    { "id": "notepad", "action": "click", "target": "start-app-notepad", "say": "Click Notepad.", "detail": "Notepad is a simple place to type notes." },
+    { "id": "type", "action": "type", "target": "notepad-text", "text": "Hello, this is my first note.", "say": "Click in the white area and type: Hello, this is my first note.", "detail": "Type it just like on a typewriter." },
+    { "id": "close", "action": "click", "target": "notepad-close", "say": "Click the X to close Notepad.", "detail": "Windows will ask about saving. That is a good thing." },
+    { "id": "dontsave", "action": "click", "target": "savechanges-dontsave", "say": "Click Don't Save for now.", "detail": "In the next lesson you will learn how to save." }
+  ]
+}

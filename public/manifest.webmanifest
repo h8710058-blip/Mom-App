@@ -1,0 +1,13 @@
+{
+  "name": "Mom App",
+  "short_name": "Mom App",
+  "description": "Learn the basics of Windows, one step at a time.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#1D5FD1",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

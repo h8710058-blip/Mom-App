@@ -1,0 +1,22 @@
+{
+  "id": "find-file",
+  "title": "Where did my file go?",
+  "summary": "Use File Explorer to find and open files.",
+  "learn": ["Open File Explorer", "Look in Documents", "Open a saved file"],
+  "setup": {
+    "explorerFolder": "desktop",
+    "files": {
+      "documents": [
+        { "name": "my letter.docx", "kind": "docx", "content": "Dear family, I am learning to use my computer." },
+        { "name": "shopping list.txt", "kind": "txt", "content": "Milk\nBread\nEggs\nBananas" }
+      ]
+    }
+  },
+  "steps": [
+    { "id": "start", "action": "click", "target": "start-button", "say": "Click the Start button.", "hint": "The blue Windows logo at the bottom." },
+    { "id": "explorer", "action": "click", "target": "start-app-explorer", "say": "Click File Explorer.", "detail": "File Explorer shows everything saved on your computer." },
+    { "id": "docs", "action": "click", "target": "explorer-nav-documents", "say": "On the left, click Documents.", "detail": "This is where your saved files usually live." },
+    { "id": "open", "action": "dblclick", "target": "file-my letter.docx", "say": "Double-click my letter to open it.", "detail": "Double-click means two quick clicks." },
+    { "id": "close", "action": "click", "target": "word-close", "say": "Click the X to close Word.", "detail": "You found your file. Nothing is lost." }
+  ]
+}

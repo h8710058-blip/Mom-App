@@ -1,0 +1,16 @@
+{
+  "id": "word-doc",
+  "title": "Write and save a Word document",
+  "summary": "Open Word, type a letter, save it.",
+  "learn": ["Open Word from Start", "Type a letter", "Save with Ctrl+S"],
+  "setup": {},
+  "steps": [
+    { "id": "start", "action": "click", "target": "start-button", "say": "Click the Start button.", "hint": "The blue Windows logo at the bottom." },
+    { "id": "word", "action": "click", "target": "start-app-word", "say": "Click Word.", "detail": "Word is for letters and documents." },
+    { "id": "type", "action": "type", "target": "word-text", "text": "Dear family, I am learning to use my computer.", "say": "Click on the page and type: Dear family, I am learning to use my computer.", "detail": "Word puts your words on a white page." },
+    { "id": "keys", "action": "key", "combo": "ctrl+s", "say": "Hold the Ctrl key and tap S.", "detail": "Ctrl+S means Save. It works in almost every program." },
+    { "id": "name", "action": "type", "target": "filename-input", "text": "my letter", "say": "Type a name for your letter: my letter", "detail": "Check that Documents is selected on the left." },
+    { "id": "go", "action": "click", "target": "saveas-save-btn", "say": "Click the Save button.", "detail": "The name appears at the top of Word." },
+    { "id": "close", "action": "click", "target": "word-close", "say": "Click the X to close Word.", "detail": "Your letter is safe in Documents." }
+  ]
+}

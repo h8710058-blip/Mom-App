@@ -1,0 +1,14 @@
+{
+  "id": "mouse-basics",
+  "title": "Mouse basics",
+  "summary": "Click, double-click and right-click.",
+  "learn": ["Click once to select", "Double-click to open", "Right-click to see a menu"],
+  "setup": {},
+  "steps": [
+    { "id": "select", "action": "click", "target": "icon-documents", "say": "Click once on the Documents folder.", "detail": "One click selects it. It turns light blue.", "hint": "Look for the glowing ring on the left side of the screen." },
+    { "id": "open", "action": "dblclick", "target": "icon-documents", "say": "Now double-click it: click twice, very quickly.", "detail": "Double-clicking opens things.", "hint": "Click the same folder two times fast." },
+    { "id": "close", "action": "click", "target": "explorer-close", "say": "Click the X in the top-right corner to close the window.", "detail": "The X always closes a window." },
+    { "id": "right", "action": "rightclick", "target": "desktop-area", "say": "Right-click on an empty part of the desktop.", "detail": "Press the right-hand button on your mouse, or tap the bottom-right of your touchpad.", "hint": "Anywhere on the blue background will work." },
+    { "id": "menu", "action": "click", "target": "ctx-refresh", "say": "Click Refresh to close the menu.", "detail": "Right-click shows extra choices. Refresh is safe: nothing will break." }
+  ]
+}

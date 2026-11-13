@@ -1,0 +1,14 @@
+{
+  "id": "download",
+  "title": "Downloading a file",
+  "summary": "Download from the internet and find it again.",
+  "learn": ["Click a Download button", "Find your download", "Know where downloads go"],
+  "setup": { "explorerFolder": "documents" },
+  "steps": [
+    { "id": "start", "action": "click", "target": "start-button", "say": "Click the Start button.", "hint": "The blue Windows logo at the bottom." },
+    { "id": "browser", "action": "click", "target": "start-app-browser", "say": "Click Browser.", "detail": "The browser is how you visit websites." },
+    { "id": "download", "action": "click", "target": "browser-download-btn", "say": "Click the blue Download button.", "detail": "A bar appears when the file arrives." },
+    { "id": "show", "action": "click", "target": "download-show-folder", "say": "Click Show in folder.", "detail": "This takes you straight to your file." },
+    { "id": "found", "action": "click", "target": "file-recipe.pdf", "say": "Click once on recipe.pdf.", "detail": "Windows saves everything you download in the Downloads folder." }
+  ]
+}

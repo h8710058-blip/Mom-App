@@ -1,0 +1,16 @@
+{
+  "id": "windows",
+  "title": "Managing windows",
+  "summary": "Hide, resize, switch and close windows.",
+  "learn": ["Minimise and bring back", "Make a window bigger or smaller", "Switch with Alt+Tab"],
+  "setup": { "open": ["explorer", "notepad"] },
+  "steps": [
+    { "id": "min", "action": "click", "target": "notepad-minimize", "say": "Click the dash (-) to hide Notepad.", "detail": "It is not closed. It waits on the bar at the bottom." },
+    { "id": "restore", "action": "click", "target": "taskbar-notepad", "say": "Click Notepad on the bottom bar to bring it back.", "detail": "That bottom bar is called the taskbar." },
+    { "id": "max", "action": "click", "target": "notepad-maximize", "say": "Click the square to make Notepad fill the screen." },
+    { "id": "restore2", "action": "click", "target": "notepad-maximize", "say": "Click the same square again to make it smaller.", "detail": "The button works like a switch." },
+    { "id": "switch", "action": "key", "combo": "alt+tab", "say": "Switch windows: hold Alt, tap Tab.", "detail": "On some computers this key press is caught by Windows itself. If so, use the button below." },
+    { "id": "close1", "action": "click", "target": "explorer-close", "say": "Click the X to close File Explorer." },
+    { "id": "close2", "action": "click", "target": "notepad-close", "say": "Now close Notepad too.", "detail": "Well done. You can now manage your windows." }
+  ]
+}
